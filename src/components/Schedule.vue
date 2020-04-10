@@ -46,7 +46,7 @@ export default {
     data: () => ({
         // We can add a property to change the number of max timestamps, it can be data retrieved from a backend for example
         maxTimestamps: 7,
-        /**
+        /*
          * For the sake of simplicity, I worked with an array of dates. 
          * Those data should reflect the current week or come from a previous selection (ie. a dropdown menu or similar)
          */
@@ -68,10 +68,13 @@ export default {
     },
     methods: {
         copyColumnValues (i) {
+            /**
+             * @param {Number} i - Index of the selected column
+             */
             // Convert index to start again from 0
             const selectedColumn = --i;
 
-            // Set copied mode on 
+            // Set copied mode on column
             this.columnValuesCopied = true;
 
             // Retrive inputs value for the selected column 
@@ -80,9 +83,14 @@ export default {
             columnInputsArray.forEach(input => {
                 columnValuesArray.push(input.value)
             })
+            
             this.valuesOnClipboard = columnValuesArray
         },
         copyRowValues (i) {
+            /**
+             * @param {Number} i - Index of the selected row
+             */
+
             // Set copied mode on 
             this.rowValuesCopied = true;
 
@@ -98,6 +106,12 @@ export default {
             this.valuesOnClipboard = rowValuesArray     
         },
         pasteValues (values, columnIndex, rowIndex) { 
+            /**
+             * A set of coordinates to match elements in the table.
+             * @param {Array} values - The values currently saved, from a column or a row.
+             * @param {Number} columnIndex - The index of the corresponding clicked column.
+             * @param {Number} rowIndex - The index of the corresponding clicked row.
+             */
             if(!values.length) {
                 return
             } else if(this.columnValuesCopied) {
