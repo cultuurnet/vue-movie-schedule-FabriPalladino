@@ -1,7 +1,13 @@
 <template>
     <section>
         <div class="tr">
-            <div class="td"></div>
+            <div class="td">
+                
+            <label
+                :class="{ 'values-copied' : valuesOnClipboard.length }">
+                <small></small>
+            </label>
+            </div>
             <div class="td td--header"
                 v-for="(timeSlot, columnIndex) in maxTimestamps"
                 :key="`schedule-header-${columnIndex}`">
@@ -155,6 +161,59 @@ section {
             &:first-child,
             &.td--header {
                 font-weight: bold;
+            }
+        }
+    }
+
+    label {
+        display: inline-block;
+
+        &.values-copied {
+            small {
+                background: green;
+                transition: .3s;
+
+                &:after {
+                    content: "Values copied";
+                    padding: 0 12px;
+                }
+            }
+        }
+
+        small {
+            display: inline-block;
+            width: 100px;
+            height: 18px;
+            background: #455a64;
+            border-radius: 30px;
+            position: relative;
+            padding: 5px 0;
+
+            // &:before {
+            //     content: "";
+            //     position: absolute;
+            //     width: 12px;
+            //     height: 12px;
+            //     background: #fff;
+            //     border-radius: 50%;
+            //     top: 3px;
+            //     left: 3px;
+            //     transition: .3s;
+            //     box-shadow: -3px 0 3px rgba(0,0,0,0.1);
+            // }
+
+            &:after {
+                content: "Clipboard empty";
+                position: absolute;
+                color: #fff;
+                font-size: 11px;
+                font-weight: 600;
+                width: 100%;
+                left: 0px;
+                text-align: right;
+                padding: 0 5px;
+                box-sizing: border-box;
+                line-height: 18px;
             }
         }
     }
