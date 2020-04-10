@@ -2,15 +2,19 @@
   <div id="app">
     <img alt="publiq logo" class="logo" src="./assets/logo.png">
     <h1>Movie Schedule</h1>
-    <p>Add your component here</p>
+
+    <Schedule />
+
   </div>
 </template>
 
 <script>
+import Schedule from "@/components/Schedule";
 
 export default {
   name: 'App',
   components: {
+    Schedule
   }
 }
 </script>
