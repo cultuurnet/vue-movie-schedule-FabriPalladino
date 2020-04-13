@@ -1,20 +1,24 @@
 <template>
-  <div id="app">
+  <section id="app">
     <img alt="publiq logo" class="logo" src="./assets/logo.png">
     <h1>Movie Schedule</h1>
 
+    <DateInterval />
     <Schedule />
 
-  </div>
+  </section>
 </template>
 
 <script>
 import Schedule from "@/components/Schedule";
+import DateInterval from "@/components/DateInterval";
+
 
 export default {
   name: 'App',
   components: {
-    Schedule
+    Schedule,
+    DateInterval
   }
 }
 </script>
