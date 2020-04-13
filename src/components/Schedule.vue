@@ -30,8 +30,6 @@
                 <input 
                     :ref="`column-${columnIndex}`" 
                     type="time" 
-                    min="09:00" 
-                    max="23:00"
                     @click="pasteValues(valuesOnClipboard, columnIndex, rowIndex)" />
             </div>
             <div class="td">
@@ -44,33 +42,34 @@
 </template>
 
 <script>
-
+import { format, eachDayOfInterval, add } from 'date-fns'
 import CopyBtn from "@/components/CopyBtn"
 
 export default {
     name: "movie-schedule",
+    props: ["interval"],
     data: () => ({
         // We can add a property to change the number of max timestamps, it can be data retrieved from a backend for example
         maxTimestamps: 7,
-        /*
-         * For the sake of simplicity, I worked with an array of dates. 
-         * Those data should reflect the current week or come from a previous selection (ie. a dropdown menu or similar)
-         */
-        dates: [
-            "03-03-20",
-            "04-03-20",
-            "05-03-20",
-            "06-03-20",
-            "07-03-20",
-            "08-03-20",
-            "09-03-20",
-        ],
         columnValuesCopied: false,
         rowValuesCopied: false,
         valuesOnClipboard: []
     }),
     components: {
         CopyBtn
+    },
+    computed: {
+        dates () {
+            const rawInterval = eachDayOfInterval({ 
+                start: new Date(), 
+                end: add(new Date(), {days: 7})
+                });
+            const dates = [];
+            rawInterval.forEach(date => {
+                dates.push(format(date, 'dd/MM/yyyy'))
+            })
+            return dates
+        }
     },
     methods: {
         copyColumnValues (i) {
@@ -145,12 +144,14 @@ export default {
 
 <style lang="scss" scoped>
 section {
+    position: relative;
     background-color: #ccc;
     display: table;
     width: 100%;
     max-width: 80vw;
     margin: 0 auto;
     padding: 2.5vmin 0;
+    z-index: 10;
 
     .tr {
         display: table-row;
@@ -188,19 +189,6 @@ section {
             border-radius: 30px;
             position: relative;
             padding: 5px 0;
-
-            // &:before {
-            //     content: "";
-            //     position: absolute;
-            //     width: 12px;
-            //     height: 12px;
-            //     background: #fff;
-            //     border-radius: 50%;
-            //     top: 3px;
-            //     left: 3px;
-            //     transition: .3s;
-            //     box-shadow: -3px 0 3px rgba(0,0,0,0.1);
-            // }
 
             &:after {
                 content: "Clipboard empty";
